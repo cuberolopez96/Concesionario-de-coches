@@ -12,8 +12,7 @@ import utiles.Teclado;
  * */
 public class TestConcesionario {
 	static Concesionario concesionario = new Concesionario();
-
-	/**
+		/**
 	 * @param args
 	 * @throws CocheNoExisteException 
 	 * @throws CocheYaExisteException 
@@ -21,6 +20,15 @@ public class TestConcesionario {
 	public static void main(String[] args) throws CocheNoExisteException, CocheYaExisteException {
 		// TODO Auto-generated method stub
 		int opcion = 0;
+		
+
+		/**
+		* Modificacion realizada por Jaime Herrerias
+		*/
+		System.out.println("Este concesionario es regulero");
+		
+
+
 		Menu menu = new Menu("Menu del concesionario. elija una opcion:",new String[]{"Alta Coche", "Baja Coche","Mostrar el Coche", "Mostrar el Concesionario","Contar coches del concesionario","Mostrar Coches de un Color","salir"});
 		do {
 			
