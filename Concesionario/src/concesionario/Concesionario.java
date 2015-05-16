@@ -3,29 +3,30 @@ package concesionario;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-import excepciones.CocheNoExisteException;
-import excepciones.CocheYaExisteException;
-import excepciones.MatriculaNoValidaException;
+import java.io.Serializable;
 
-public class Concesionario {
+public class Concesionario implements Serializable {
 	private ArrayList<Coche> listaCoches;
+        private static final long serialVersionUID = 6529685098267757690L;
+       
 
 	public Concesionario() {
 		super();
 		listaCoches = new ArrayList<Coche>();  ;
 	}
-	public String altaCoches(Modelo modelo,Color color,String Matricula) throws  CocheYaExisteException, CocheNoExisteException, MatriculaNoValidaException{
-		Coche coche = Coche.instanciarCoche(modelo, color, Matricula);
-		if (listaCoches.contains(coche)) {
-			throw new CocheYaExisteException("este coche ya existe , no se volvera a añadir");
+	public void altaCoches(Modelo modelo,Color color,String matricula) throws  CocheYaExisteException, CocheNoExisteException, MatriculaNoValidaException, ColorNoValido, ModeloNoValido{
+		Coche coche = new Coche(modelo, color, matricula);
+		if (listaCoches.contains(coche) && validarMatricula(matricula)) {
+			throw new CocheYaExisteException("este coche ya existe , no se volvera a aï¿½adir");
 		}
+                
 		listaCoches.add(coche);
-		return "el coche ha sido añadido";
+		
 		
 	}
 	public String bajaCoches(String Matricula) throws CocheNoExisteException{
 
-		if (!listaCoches.remove(comprobarMatricula( Matricula))==false) {
+		if (listaCoches.remove(comprobarMatricula( Matricula))==false) {
 			throw new CocheNoExisteException("el coche no ha sido eliminado");
 		}
 		return "el coche ha sido eliminado";
@@ -38,29 +39,37 @@ public class Concesionario {
 		}
 		throw new CocheNoExisteException("no se ha encontrado el coche");
 	}
-	public String mostrarCoche(String matricula) throws CocheNoExisteException{
-		return comprobarMatricula(matricula).toString();
+	public Coche mostrarCoche(String matricula) throws CocheNoExisteException{
+		return comprobarMatricula(matricula);
 	}
-	@Override
-	public String toString() {
-		String string = "";
-		for (Coche coche : listaCoches) {
-			string += coche.toString() + "\n";
-		}
-		return string;
-	}
+	public Coche mostrarConcesionario(int i){
+            return listaCoches.get(i);
+        }
 	public int contarCoches(){
 		return listaCoches.size();
 	}
-	public String mostrarCochesColor(Color Color){
-		String string = "";
+	public ArrayList mostrarCochesColor(Color Color){
+		ArrayList <Coche> color = new ArrayList<Coche>();
 		for (Coche coche : listaCoches) {
 			if (Color == coche.getColor()) {
-				string += coche.toString() + "\n";
+				color.add(coche);
 			}
 		}
-		return string;
+                return color;
+		
 	}
+
+    private boolean validarMatricula(String matricula) {
+        for (Coche coche: listaCoches) {
+            if (matricula.equals(coche.getMatricula())) {
+                return true;
+            }
+        }
+        return false;//To change body of generated methods, choose Tools | Templates.
+    }
+    public void vaciar(){
+        listaCoches.clear();
+    }
 	
 	
 	

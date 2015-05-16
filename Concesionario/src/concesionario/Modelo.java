@@ -9,18 +9,23 @@ package concesionario;
  *
  */
 public enum Modelo {
-	SERIE1,
-	SERIE2,
-	SERIE3,
-	SERIE5,
-	CORDOBA,
-	IBIZA,
-	TOLEDO;
+	SERIE1(Marca.BMW),
+	SERIE2(Marca.BMW),
+	SERIE3(Marca.BMW),
+	SERIE5(Marca.BMW),
+	CORDOBA(Marca.SEAT),
+	IBIZA(Marca.SEAT),
+	TOLEDO(Marca.SEAT);
 	
-	private String nombre;
-	private int valor;
+	
+        private Marca marca;
 	/** constructor de Modelos*/
-
+        private Modelo(Marca marca){
+            this.marca = marca;
+        }
+        private Modelo(){
+            
+        }
 	public static Modelo getModelo(int valor){
 		for (Modelo modelo : Modelo.values()) {
 			if (modelo.ordinal() == valor) {
@@ -33,14 +38,17 @@ public enum Modelo {
 	/** getter de nombre
 	 * @return nombre */
 //	
-	public static String[] toArray(){
-		String[] array = new String[7];
+	public static Modelo[] toArray(){
+		Modelo[] array = new Modelo[7];
 		int i = 0;
 		for (Modelo modelo : Modelo.values()) {
-			array[i] = modelo.name();
+			array[i] = modelo;
 			i++;
 		}
 		
 		return array;
 	}
+        public Marca getMarca(){
+            return marca;
+        }
 }
